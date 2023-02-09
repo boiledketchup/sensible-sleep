@@ -1,0 +1,118 @@
+{
+  "mod_elements": [
+    {
+      "name": "SaveSleepTime",
+      "type": "procedure",
+      "sortid": 1,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "save_sleep_time",
+      "metadata": {
+        "dependencies": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Nightmare",
+      "type": "procedure",
+      "sortid": 2,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "nightmare",
+      "metadata": {
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Hypersomnia",
+      "type": "enchantment",
+      "sortid": 3,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "hypersomnia"
+    }
+  ],
+  "variable_elements": [
+    {
+      "name": "sleeptime",
+      "type": "number",
+      "scope": "map",
+      "value": "0"
+    },
+    {
+      "name": "rainingSleep",
+      "type": "logic",
+      "scope": "map",
+      "value": "false"
+    }
+  ],
+  "sound_elements": [],
+  "language_map": {
+    "en_us": {
+      "message.sleep.villagerbed": "This bed belongs to someone else",
+      "message.sleep.nightmare": "This bed is in a dangerous place",
+      "message.sleep.unsafe": "This bed is not in a safe place",
+      "enchantment.sensible_sleep.hypersomnia": "Hypersomnia"
+    }
+  },
+  "foldersRoot": {
+    "name": "~",
+    "children": []
+  },
+  "workspaceSettings": {
+    "modid": "sensible_sleep",
+    "modName": "Sensible Sleep",
+    "version": "1.0.0",
+    "author": "nojus, MCreator",
+    "websiteURL": "https://mcreator.net",
+    "license": "Academic Free License v3.0",
+    "disableForgeVersionCheck": true,
+    "serverSideOnly": false,
+    "requiredMods": [],
+    "dependencies": [],
+    "dependants": [],
+    "mcreatorDependencies": [],
+    "currentGenerator": "forge-1.18.2",
+    "credits": "Created using mod maker MCreator - https://mcreator.net/about",
+    "modElementsPackage": "net.mcreator.sensible_sleep",
+    "lockBaseModFiles": false
+  },
+  "mcreatorVersion": 202200348217
+}

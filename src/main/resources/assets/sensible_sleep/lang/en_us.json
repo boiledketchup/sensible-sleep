@@ -1,0 +1,6 @@
+{
+  "message.sleep.villagerbed": "This bed belongs to someone else",
+  "message.sleep.nightmare": "This bed is in a dangerous place",
+  "message.sleep.unsafe": "This bed is not in a safe place",
+  "enchantment.sensible_sleep.hypersomnia": "Hypersomnia"
+}
