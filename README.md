@@ -6,6 +6,6 @@ Also adds a new helmet enchantment, Hypersomnia, which makes you sleep well anyw
 
 (1): If players connected to server = 1
 
-(2): If bed location has light level less than 11 and access to the sky
+(2): If bed location has light level less than 8 and access to the sky
 
 (3): If you don't have Hero Of The Village effect applied
