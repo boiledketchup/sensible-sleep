@@ -86,6 +86,7 @@
   "sound_elements": [],
   "language_map": {
     "en_us": {
+      "message.sleep.raider": "This bed is under siege",
       "message.sleep.villagerbed": "This bed belongs to someone else",
       "message.sleep.nightmare": "This bed is in a dangerous place",
       "message.sleep.unsafe": "This bed is not in a safe place",

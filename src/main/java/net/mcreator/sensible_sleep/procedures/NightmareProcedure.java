@@ -15,6 +15,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -57,9 +58,11 @@ public class NightmareProcedure {
 		boolean nightmare = false;
 		boolean safe = false;
 		boolean villager = false;
+		boolean raid = false;
 		nightmare = false;
 		safe = false;
 		villager = false;
+		raid = false;
 		{
 			final Vec3 _center = new Vec3(x, y, z);
 			List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(4 / 2d), e -> true).stream()
@@ -76,19 +79,39 @@ public class NightmareProcedure {
 				}
 			}
 		}
+		{
+			final Vec3 _center = new Vec3(x, y, z);
+			List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(24 / 2d), e -> true).stream()
+					.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center))).collect(Collectors.toList());
+			for (Entity entityiterator : _entfound) {
+				if (entityiterator instanceof LivingEntity _livEnt ? _livEnt.getMobType() == MobType.ILLAGER : false) {
+					nightmare = true;
+					villager = false;
+					raid = true;
+					{
+						Entity _ent = entityiterator;
+						_ent.teleportTo(x, y, z);
+						if (_ent instanceof ServerPlayer _serverPlayer)
+							_serverPlayer.connection.teleport(x, y, z, _ent.getYRot(), _ent.getXRot());
+					}
+					break;
+				}
+			}
+		}
 		if (!(EnchantmentHelper.getItemEnchantmentLevel(SensibleSleepModEnchantments.HYPERSOMNIA.get(),
 				(entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY)) != 0)) {
 			if (!world.canSeeSkyFromBelowWater(new BlockPos(x, y + 1, z)) && 7 < world.getMaxLocalRawBrightness(new BlockPos(x, y, z))) {
 				safe = true;
 			}
-			if (!safe && !villager) {
+			if (!safe && !villager && !nightmare) {
 				{
 					final Vec3 _center = new Vec3(x, y, z);
 					List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(24 / 2d), e -> true).stream()
 							.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center))).collect(Collectors.toList());
 					for (Entity entityiterator : _entfound) {
-						if ((entityiterator instanceof LivingEntity _livEnt ? _livEnt.getMobType() == MobType.UNDEAD : false)
-								|| (entityiterator instanceof LivingEntity _livEnt ? _livEnt.getMobType() == MobType.ARTHROPOD : false)) {
+						if (((entityiterator instanceof LivingEntity _livEnt ? _livEnt.getMobType() == MobType.UNDEAD : false)
+								|| (entityiterator instanceof LivingEntity _livEnt ? _livEnt.getMobType() == MobType.ARTHROPOD : false))
+								&& !(entityiterator instanceof TamableAnimal _tamEnt ? _tamEnt.isTame() : false)) {
 							nightmare = true;
 							{
 								Entity _ent = entityiterator;
@@ -128,8 +151,13 @@ public class NightmareProcedure {
 					if (world instanceof ServerLevel _level)
 						_level.setDayTime((int) SensibleSleepModVariables.MapVariables.get(world).sleeptime);
 				}
-				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent((new TranslatableComponent("message.sleep.nightmare").getString())), (true));
+				if (raid) {
+					if (entity instanceof Player _player && !_player.level.isClientSide())
+						_player.displayClientMessage(new TextComponent((new TranslatableComponent("message.sleep.raider").getString())), (true));
+				} else {
+					if (entity instanceof Player _player && !_player.level.isClientSide())
+						_player.displayClientMessage(new TextComponent((new TranslatableComponent("message.sleep.nightmare").getString())), (true));
+				}
 			}
 			if (villager && !(entity instanceof LivingEntity _livEnt ? _livEnt.hasEffect(MobEffects.HERO_OF_THE_VILLAGE) : false)) {
 				if (world instanceof Level _level) {
